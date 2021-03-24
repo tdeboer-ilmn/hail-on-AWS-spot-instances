@@ -7,11 +7,11 @@ import botocore
 import paramiko
 import re
 import os
-import yaml
+import yaml, re
 
 PATH=os.path.dirname(os.path.abspath(__file__))
 
-c=yaml.load(open(PATH+"/config_EMR_spot.yaml"))
+c=yaml.load(open(PATH+"/config_EMR_spot.yaml"),Loader=yaml.SafeLoader)
 
 # Spot instances and different CORE/MASTER instances
 command='aws emr create-cluster --applications Name=Hadoop Name=Spark --tags \'project='+c['config']['PROJECT_TAG']+'\' \'Owner='+c['config']['OWNER_TAG']+'\' \'Name='+c['config']['EC2_NAME_TAG']+'\' --ec2-attributes \'{"KeyName":"'+c['config']['KEY_NAME']+'","InstanceProfile":"EMR_EC2_DefaultRole","SubnetId":"'+c['config']['SUBNET_ID']+'","EmrManagedSlaveSecurityGroup":"'+c['config']['WORKER_SECURITY_GROUP']+'","EmrManagedMasterSecurityGroup":"'+c['config']['MASTER_SECURITY_GROUP']+'"}\' --service-role EMR_DefaultRole --release-label emr-5.23.0 --log-uri \''+c['config']['S3_BUCKET']+'\' --name \''+c['config']['EMR_CLUSTER_NAME']+'\' --instance-groups \'[{"InstanceCount":1,"EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":'+c['config']['MASTER_HD_SIZE']+',"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"MASTER","InstanceType":"'+c['config']['MASTER_INSTANCE_TYPE']+'","Name":"Master-Instance"},{"InstanceCount":'+c['config']['WORKER_COUNT']+',"BidPrice":"'+c['config']['WORKER_BID_PRICE']+'","EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"SizeInGB":'+c['config']['WORKER_HD_SIZE']+',"VolumeType":"gp2"},"VolumesPerInstance":1}]},"InstanceGroupType":"CORE","InstanceType":"'+c['config']['WORKER_INSTANCE_TYPE']+'","Name":"Core-Group"}]\' --configurations \'[{"Classification":"spark","Properties":{"maximizeResourceAllocation":"true"}},{"Classification":"yarn-site","Properties":{"yarn.nodemanager.vmem-check-enabled":"false"},"Configurations":[]}]\' --auto-scaling-role EMR_AutoScaling_DefaultRole --ebs-root-volume-size 32 --scale-down-behavior TERMINATE_AT_TASK_COMPLETION --region '+c['config']['REGION']+' --bootstrap-actions Path="s3://hms-dbmi-docs/hail_bootstrap/bootstrap_python36.sh"'
@@ -20,8 +20,8 @@ print("\n\nYour AWS CLI export command:\n")
 print(command)
 
 cluster_id_json=os.popen(command).read()
-cluster_id=cluster_id_json.split(": \"",1)[1].split("\"\n")[0]
-
+#cluster_id=cluster_id_json.split(": \"",1)[1].split("\"\n")[0]
+cluster_id=re.split('\s',cluster_id_json)[1]
 # Gives EMR cluster information
 client_EMR = boto3.client('emr', region_name=c['config']['REGION'])
 

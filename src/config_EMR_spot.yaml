@@ -1,19 +1,19 @@
 config:
   EMR_CLUSTER_NAME: "my-hail-02-cluster" # Give a name to your EMR cluster
   EC2_NAME_TAG: "my-hail-EMR" # Adds a tag to the individual EC2 instances
-  OWNER_TAG: "emr-owner" # EC2 owner tag
-  PROJECT_TAG: "my-project" # Project tag
+  OWNER_TAG: "tdeboer-ilmn" # EC2 owner tag
+  PROJECT_TAG: "GRE_on_ICA" # Project tag
   REGION: "us-east-1"
   MASTER_INSTANCE_TYPE: "m4.large"
   WORKER_INSTANCE_TYPE: "r4.4xlarge"
   WORKER_COUNT: "4" # Number of worker nodes
-  WORKER_BID_PRICE: "0.44" # Required for spot instances
-  MASTER_HD_SIZE: "50" # Size in GB - For large data sets, more HD space may be required
-  WORKER_HD_SIZE: "150" # Size in GB - For large data sets, more HD space may be required
+  WORKER_BID_PRICE: "0.50" # Required for spot instances
+  MASTER_HD_SIZE: "250" # Size in GB - For large data sets, more HD space may be required
+  WORKER_HD_SIZE: "500" # Size in GB - For large data sets, more HD space may be required
   SUBNET_ID: "" # This field can be either left blank or for further security you can specify your private subnet ID in the form: subnet-1a2b3c4d
-  S3_BUCKET: "s3n://my-s3-bucket/" # Specify your S3 bucket for EMR log storage
-  KEY_NAME: "my-key" # Input your key name ONLY! DO NOT include the .pem extension
-  PATH_TO_KEY: "/full-path-to/my-key/" # Full path to the FOLDER where the .pem file resides
-  WORKER_SECURITY_GROUP: "" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
-  MASTER_SECURITY_GROUP: "" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
+  S3_BUCKET: "s3n://ilmn-hail/" # Specify your S3 bucket for EMR log storage
+  KEY_NAME: "hail-ES-GRE" # Input your key name ONLY! DO NOT include the .pem extension
+  PATH_TO_KEY: "/data/.aws/" # Full path to the FOLDER where the .pem file resides
+  WORKER_SECURITY_GROUP: "sg-0df1e5704ca2a8196" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
+  MASTER_SECURITY_GROUP: "sg-0bab1202c0aa453b3" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
   HAIL_VERSION: "current" # Specify a git hash version (the first 7-12 characters will suffice) to install a specific commit/version. When left empty or "current" will install the latest version of Hail available in the repo
