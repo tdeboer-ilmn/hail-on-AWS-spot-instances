@@ -11,6 +11,7 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
     sudo yum install gcc-c++ cmake git -y
     sudo yum install gcc72-c++ -y # Fixes issue with c++14 incompatibility in Amazon Linux
     sudo yum install lz4 lz4-devel -y # Fixes issue of missing lz4
+    sudo yum install openblas-devel.x86_64 lapack-devel.x86_64 -y
     # Master node: Install all
     WHEELS="pyserial
     oauth
@@ -28,9 +29,9 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
     selenium
     pillow
     python-magic
-    pyspark==2.4.7
     jupyterlab>3.0.0"
 else 
+    sudo yum install openblas-devel.x86_64 lapack-devel.x86_64 -y
     # Worker node: Install all but jupyter lab
     WHEELS="pyserial
     oauth
@@ -47,7 +48,6 @@ else
     boto3
     selenium
     pillow
-    pyspark
     python-magic"
 fi
 
