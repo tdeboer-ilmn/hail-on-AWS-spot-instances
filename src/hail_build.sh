@@ -10,7 +10,7 @@ error_msg ()
 # Usage
 usage()
 {
-echo "Usage: cloudformation.sh [-v | --version <git hash>] [-h | --help]
+echo "Usage: hail_build.sh [-v | --version <git hash>] [-h | --help]
 
 Options:
 -v | --version <git hash>

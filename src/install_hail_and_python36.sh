@@ -48,6 +48,24 @@ while [ "$1" != "" ]; do
     shift
 done
 
+#Fix the link for python2 (GSUTIL needs it to be python2.7)
+sudo unlink /usr/bin/python2
+ln -s /usr/bin/python2.7 /usr/bin/python2
+
+#Install GOOGLE cloud (on AWS !) since HAIL seems to copy something from a gs:// address
+sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
+[google-cloud-sdk]
+name=Google Cloud SDK
+baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOM
+
+sudo yum install google-cloud-sdk
+
 chmod 700 $HOME/.ssh/id_rsa/
 KEY=$(ls ~/.ssh/id_rsa/)
 
@@ -78,9 +96,9 @@ cd $HAIL_HOME/src
 for WORKERIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
 do
    scp -i ~/.ssh/id_rsa/${KEY} install_python36.sh hadoop@${WORKERIP}:/tmp/install_python36.sh
+   ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} 'export PATH=/usr/local/bin:$PATH'
    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo ls -al /tmp/install_python36.sh"
    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo /tmp/install_python36.sh &"  
-   ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} 'export PATH=/usr/local/bin:$PATH'
 done
 
 # Set the time zone for cron updates
