@@ -27,7 +27,8 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
     boto3
     selenium
     pillow
-    jupyterlab"
+    python-magic
+    'jupyterlab>3.0.0'"
 else 
     # Worker node: Install all but jupyter lab
     WHEELS="pyserial
@@ -44,7 +45,8 @@ else
     requests
     boto3
     selenium
-    pillow"
+    pillow
+    python-magic"
 fi
 
 for WHEEL_NAME in $WHEELS
