@@ -5,7 +5,7 @@ exec 1>/tmp/cloudcreation_log.out 2>&1
 
 export HAIL_HOME="/opt/hail-on-AWS-spot-instances"
 export HASH="current"
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:/opt/gsutil:${PATH}
 
 # Error message
 error_msg ()
@@ -48,22 +48,9 @@ while [ "$1" != "" ]; do
     shift
 done
 
-#Fix the link for python2 (GSUTIL needs it to be python2.7)
-sudo yum remove python2 -y
-
 #Install GOOGLE cloud (on AWS !) since HAIL seems to copy something from a gs:// address
-sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
-[google-cloud-sdk]
-name=Google Cloud SDK
-baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
-       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-EOM
-
-sudo yum install google-cloud-sdk -y
+wget --quiet https://storage.googleapis.com/pub/gsutil.tar.gz
+sudo tar zxf gsutil.tar.gz -C /opt
 
 chmod 700 $HOME/.ssh/id_rsa/
 KEY=$(ls ~/.ssh/id_rsa/)
