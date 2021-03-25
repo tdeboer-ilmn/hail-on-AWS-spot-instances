@@ -28,8 +28,7 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
 	requests
 	boto3
 	python-magic
-	jupyterlab
-    'setuptools>=45'"
+	jupyterlab"
 else 
 	# Worker node: Install all but jupyter lab
 	WHEELS="pyserial
@@ -45,8 +44,7 @@ else
 	bokeh
 	requests
 	boto3
-	python-magic
-    'setuptools>=45'"
+	python-magic"
 fi
 
 for WHEEL_NAME in $WHEELS

@@ -5,6 +5,7 @@ exec 1>/tmp/cloudcreation_log.out 2>&1
 
 export HAIL_HOME="/opt/hail-on-AWS-spot-instances"
 export HASH="current"
+export PATH=/usr/local/bin:$PATH
 
 # Error message
 error_msg ()
@@ -16,7 +17,7 @@ error_msg ()
 # Usage
 usage()
 {
-echo "Usage: cloudformation.sh [-v | --version <git hash>] [-h | --help]
+echo "Usage: install_hail_and_python.sh [-v | --version <git hash>] [-h | --help]
 
 Options:
 -v | --version <git hash>
@@ -34,14 +35,14 @@ Options:
 # Read input parameters
 while [ "$1" != "" ]; do
     case $1 in
-        -v|--version)	shift
+        -v|--version)   shift
                         HASH="$1"
                         ;;
         -h|--help)      usage
                         ;;
         -*)
-      					error_msg "unrecognized option: $1"
-      					;;
+                        error_msg "unrecognized option: $1"
+                        ;;
         *)              usage
     esac
     shift
@@ -58,6 +59,9 @@ done
 
 echo 'Keys successfully copied to the worker nodes'
 
+#Install python, git etc. on the master node
+./install_python36.sh
+
 # Add hail to the master node
 sudo mkdir -p /opt
 sudo chmod 777 /opt/
@@ -70,14 +74,13 @@ cd $HAIL_HOME/src
 ./update_hail.sh -v $HASH
 
 # Update to Python 3.6 (Resurrected, since easier to do here than have public bucket)
-# First for the master node
-./install_python36.sh
-Then for the worker nodes
+#Then for the worker nodes
 for WORKERIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
 do
    scp -i ~/.ssh/id_rsa/${KEY} install_python36.sh hadoop@${WORKERIP}:/tmp/install_python36.sh
    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo ls -al /tmp/install_python36.sh"
    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo /tmp/install_python36.sh &"  
+   ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} 'export PATH=/usr/local/bin:$PATH'
 done
 
 # Set the time zone for cron updates

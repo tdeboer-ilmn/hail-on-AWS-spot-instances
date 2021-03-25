@@ -28,21 +28,21 @@ Options:
 # Read input parameters
 while [ "$1" != "" ]; do
     case $1 in
-        -v|--version)	shift
+        -v|--version)   shift
                         HASH="$1"
                         ;;
         -h|--help)      usage
                         ;;
         -*)
-      					error_msg "unrecognized option: $1"
-      					;;
+                        error_msg "unrecognized option: $1"
+                        ;;
         *)              usage
     esac
     shift
 done
 
 OUTPUT_PATH=""
-HAIL_VERSION="master"
+HAIL_VERSION="main"
 SPARK_VERSION="2.4.7"
 COMPILE=true
 IS_MASTER=false
