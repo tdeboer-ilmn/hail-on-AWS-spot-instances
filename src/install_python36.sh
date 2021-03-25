@@ -8,7 +8,7 @@ sudo python3 -m pip install --upgrade pip
 sudo python3 -m pip install 'setuptools>=45'
 
 if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
-    sudo yum install g++ cmake git -y
+    sudo yum install gcc-c++ cmake git -y
     sudo yum install gcc72-c++ -y # Fixes issue with c++14 incompatibility in Amazon Linux
     sudo yum install lz4 lz4-devel -y # Fixes issue of missing lz4
     # Master node: Install all

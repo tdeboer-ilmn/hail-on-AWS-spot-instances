@@ -64,7 +64,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOM
 
-sudo yum install google-cloud-sdk
+sudo yum install google-cloud-sdk -y
 
 chmod 700 $HOME/.ssh/id_rsa/
 KEY=$(ls ~/.ssh/id_rsa/)
