@@ -29,6 +29,7 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
     selenium
     pillow
     python-magic
+    pyspark
     jupyterlab>3.0.0"
 else 
     sudo yum install openblas-devel.x86_64 lapack-devel.x86_64 -y
@@ -48,6 +49,7 @@ else
     boto3
     selenium
     pillow
+    pyspark
     python-magic"
 fi
 
