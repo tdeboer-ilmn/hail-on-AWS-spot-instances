@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH=$PATH:/usr/local/bin
+export PATH=/opt/gsutil:/usr/local/bin:$PATH
 
 sudo yum install python36 python36-devel python36-setuptools -y 
 sudo easy_install pip

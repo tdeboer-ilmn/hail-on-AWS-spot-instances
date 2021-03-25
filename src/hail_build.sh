@@ -41,6 +41,8 @@ while [ "$1" != "" ]; do
     shift
 done
 
+export PATH=/usr/local/bin:/opt/gsutil:${PATH}
+
 OUTPUT_PATH=""
 HAIL_VERSION="main"
 SCALA_VERSION="2.12.8"
@@ -123,7 +125,7 @@ if [ "$IS_MASTER" = true ]; then
     if [ "$COMPILE" = true ]; then
         # Compile with Spark 2.4.7
         if [ $SELECTED_VERSION -ge $GRADLE_DEPRECATION ];then
-            sudo make install-on-cluster HAIL_COMPILE_NATIVES=1 SCALA_VERSION=${SCALA_VERSION} SPARK_VERSION=${SPARK_VERSION}
+            make install-on-cluster HAIL_COMPILE_NATIVES=1 SCALA_VERSION=${SCALA_VERSION} SPARK_VERSION=${SPARK_VERSION}
       else  ./gradlew -Dspark.version=$SPARK_VERSION -Dbreeze.version=0.13.2 -Dpy4j.version=0.10.6 shadowJar archiveZip
             cp $PWD/build/distributions/hail-python.zip $HOME
             cp $PWD/build/libs/hail-all-spark.jar $HOME

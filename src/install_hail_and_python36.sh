@@ -51,6 +51,7 @@ done
 #Install GOOGLE cloud (on AWS !) since HAIL seems to copy something from a gs:// address
 wget --quiet https://storage.googleapis.com/pub/gsutil.tar.gz
 sudo tar zxf gsutil.tar.gz -C /opt
+sudo ln -s /opt/gsutil/gsutil /usr/local/bin/gsutil
 
 chmod 700 $HOME/.ssh/id_rsa/
 KEY=$(ls ~/.ssh/id_rsa/)
