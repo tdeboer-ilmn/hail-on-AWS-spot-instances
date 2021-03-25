@@ -63,22 +63,22 @@ sudo mkdir -p /opt
 sudo chmod 777 /opt/
 sudo chown hadoop:hadoop /opt
 cd /opt
-git clone https://github.com/hms-dbmi/hail-on-AWS-spot-instances.git
+git clone https://github.com/tdeboer-ilmn/hail-on-AWS-spot-instances.git
 cd $HAIL_HOME/src
 
 # Compile Hail
 ./update_hail.sh -v $HASH
 
-# Update to Python 3.6 (Not needed anymore - the bootstrap action takes care of it)
+# Update to Python 3.6 (Resurrected, since easier to do here than have public bucket)
 # First for the master node
-# ./install_python36.sh
-# Then for the worker nodes
-# for WORKERIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
-# do
-#    scp -i ~/.ssh/id_rsa/${KEY} install_python36.sh hadoop@${WORKERIP}:/tmp/install_python36.sh
-#    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo ls -al /tmp/install_python36.sh"
-#    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo /tmp/install_python36.sh &"  
-# done
+./install_python36.sh
+Then for the worker nodes
+for WORKERIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
+do
+   scp -i ~/.ssh/id_rsa/${KEY} install_python36.sh hadoop@${WORKERIP}:/tmp/install_python36.sh
+   ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo ls -al /tmp/install_python36.sh"
+   ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo /tmp/install_python36.sh &"  
+done
 
 # Set the time zone for cron updates
 sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime

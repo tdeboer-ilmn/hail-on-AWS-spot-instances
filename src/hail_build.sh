@@ -43,7 +43,7 @@ done
 
 OUTPUT_PATH=""
 HAIL_VERSION="master"
-SPARK_VERSION="2.4.0"
+SPARK_VERSION="2.4.7"
 COMPILE=true
 IS_MASTER=false
 GRADLE_DEPRECATION=1566593776
@@ -87,7 +87,7 @@ if [ "$IS_MASTER" = true ]; then
     sudo yum -y install gcc72-c++ # Fixes issue with c++14 incompatibility in Amazon Linux
     sudo yum install -y lz4 # Fixes issue of missing lz4
     sudo yum install -y lz4-devel
-    git clone https://github.com/broadinstitute/hail.git
+    git clone https://github.com/hail-is/hail.git
     cd hail/hail/
     git checkout $HAIL_VERSION
     GIT_HASH="$(git log --pretty=format:"%H" | grep $HASH | cut -f 1 -d ' ')"
@@ -100,7 +100,7 @@ if [ "$IS_MASTER" = true ]; then
     		# exit 1
     	fi
     else
-    	export TEST="$(aws s3 ls s3://hms-dbmi-docs/hail-versions/ | grep $HASH | sed -e 's/^[ \t]*//' | cut -d " " -f 2)"
+    	export TEST="$(aws s3 ls s3://tdeboer-ilmn/hail-versions/ | grep $HASH | sed -e 's/^[ \t]*//' | cut -d " " -f 2)"
     	if [ -z "$TEST" ] || [-z "$GIT_HASH" ]; then
     		echo "Hail pre-compiled version not found!"
             echo "Compiling Hail with git hash: $GIT_HASH"
@@ -108,7 +108,7 @@ if [ "$IS_MASTER" = true ]; then
             SELECTED_VERSION=`git show -s --format=%ct $GIT_HASH`
     	else
     		echo "Hail pre-compiled version found: $TEST"
-            aws s3 cp s3://hms-dbmi-docs/hail-versions/$TEST $HOME/ --recursive
+            aws s3 cp s3://tdeboer-ilmn/hail-versions/$TEST $HOME/ --recursive
             GIT_HASH="$(echo $TEST | cut -d "-" -f 1)"
             git reset --hard $GIT_HASH
             COMPILE=false
@@ -120,7 +120,7 @@ if [ "$IS_MASTER" = true ]; then
      
 
     if [ "$COMPILE" = true ]; then
-        # Compile with Spark 2.4.0
+        # Compile with Spark 2.4.7
         if [ $SELECTED_VERSION -ge $GRADLE_DEPRECATION ];then
           echo "Compiling with Wheel..."
           make clean

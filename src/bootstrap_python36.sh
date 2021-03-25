@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-# This file is available in public bucket: s3://hms-dbmi-docs/hail_bootstrap/bootstrap_python36.sh
-
 export PATH=$PATH:/usr/local/bin
 
 cd $HOME
@@ -30,7 +28,8 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
 	requests
 	boto3
 	python-magic
-	jupyterlab"
+	jupyterlab
+    'setuptools>=45'"
 else 
 	# Worker node: Install all but jupyter lab
 	WHEELS="pyserial
@@ -46,7 +45,8 @@ else
 	bokeh
 	requests
 	boto3
-	python-magic"
+	python-magic
+    'setuptools>=45'"
 fi
 
 for WHEEL_NAME in $WHEELS
