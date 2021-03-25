@@ -81,6 +81,7 @@ cd $HAIL_HOME/src
 #Then for the worker nodes
 for WORKERIP in `sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2`
 do
+   echo '#####################################################################################'
    scp -i ~/.ssh/id_rsa/${KEY} install_python36.sh hadoop@${WORKERIP}:/tmp/install_python36.sh
    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} 'export PATH=/usr/local/bin:$PATH'
    ssh -i ~/.ssh/id_rsa/${KEY} hadoop@${WORKERIP} "sudo ls -al /tmp/install_python36.sh"
