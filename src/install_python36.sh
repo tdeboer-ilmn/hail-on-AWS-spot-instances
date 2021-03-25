@@ -28,7 +28,8 @@ if grep isMaster /mnt/var/lib/info/instance.json | grep true; then
     selenium
     pillow
     python-magic
-    'jupyterlab>3.0.0'"
+    pyspark==2.4.7
+    jupyterlab>3.0.0"
 else 
     # Worker node: Install all but jupyter lab
     WHEELS="pyserial
@@ -46,6 +47,7 @@ else
     boto3
     selenium
     pillow
+    pyspark
     python-magic"
 fi
 

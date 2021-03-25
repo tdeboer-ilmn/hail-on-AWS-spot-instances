@@ -49,8 +49,7 @@ while [ "$1" != "" ]; do
 done
 
 #Fix the link for python2 (GSUTIL needs it to be python2.7)
-sudo unlink /usr/bin/python2
-sudo ln -s /usr/bin/python2.7 /usr/bin/python2
+sudo yum remove python2 -y
 
 #Install GOOGLE cloud (on AWS !) since HAIL seems to copy something from a gs:// address
 sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
