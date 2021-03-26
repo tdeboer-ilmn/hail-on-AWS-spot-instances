@@ -45,7 +45,7 @@ export PATH=/usr/local/bin:/opt/gsutil:${PATH}
 
 OUTPUT_PATH=""
 HAIL_VERSION="main"
-SCALA_VERSION="2.12.8"
+SCALA_VERSION="2.11.12"
 SPARK_VERSION="2.4.7"
 COMPILE=true
 IS_MASTER=false
@@ -103,7 +103,7 @@ if [ "$IS_MASTER" = true ]; then
     		# exit 1
     	fi
     else
-    	export TEST="$(aws s3 ls s3://tdeboer-ilmn/hail-versions/ | grep $HASH | sed -e 's/^[ \t]*//' | cut -d " " -f 2)"
+    	export TEST="$(aws s3 ls s3://hms-dbmi-docs/hail-versions/ | grep $HASH | sed -e 's/^[ \t]*//' | cut -d " " -f 2)"
     	if [ -z "$TEST" ] || [-z "$GIT_HASH" ]; then
     		echo "Hail pre-compiled version not found!"
             echo "Compiling Hail with git hash: $GIT_HASH"
@@ -111,7 +111,7 @@ if [ "$IS_MASTER" = true ]; then
             SELECTED_VERSION=`git show -s --format=%ct $GIT_HASH`
     	else
     		echo "Hail pre-compiled version found: $TEST"
-            aws s3 cp s3://tdeboer-ilmn/hail-versions/$TEST $HOME/ --recursive
+            aws s3 cp s3://hms-dbmi-docs/hail-versions/$TEST $HOME/ --recursive
             GIT_HASH="$(echo $TEST | cut -d "-" -f 1)"
             git reset --hard $GIT_HASH
             COMPILE=false

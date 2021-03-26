@@ -16,4 +16,4 @@ config:
   PATH_TO_KEY: "/data/" # Full path to the FOLDER where the .pem file resides
   WORKER_SECURITY_GROUP: "sg-0df1e5704ca2a8196" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
   MASTER_SECURITY_GROUP: "sg-0bab1202c0aa453b3" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
-  HAIL_VERSION: "current" # Specify a git hash version (the first 7-12 characters will suffice) to install a specific commit/version. When left empty or "current" will install the latest version of Hail available in the repo
+  HAIL_VERSION: "da7bad2a6ec75a5a2e9c7910194130416550480at" # Specify a git hash version (the first 7-12 characters will suffice) to install a specific commit/version. When left empty or "current" will install the latest version of Hail available in the repo
