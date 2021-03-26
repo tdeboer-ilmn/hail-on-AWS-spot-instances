@@ -1,5 +1,5 @@
 config:
-  EMR_RELEASE: "6.2.0" #Release of EMR that maps to SPARK versions (6.2.0 == Spark 3.0.1)
+  EMR_RELEASE: "emr-6.2.0" #Release of EMR that maps to SPARK versions (6.2.0 == Spark 3.0.1)
   EMR_CLUSTER_NAME: "tdeboer-hail" # Give a name to your EMR cluster
   EC2_NAME_TAG: "tdeboer-hail-EMR" # Adds a tag to the individual EC2 instances
   OWNER_TAG: "tdeboer-ilmn" # EC2 owner tag
