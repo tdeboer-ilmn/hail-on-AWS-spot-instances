@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#export SPARK_HOME=/usr/lib/spark
+export SPARK_HOME=/usr/lib/spark
 export PYSPARK_PYTHON=python3
 export HAIL_HOME=/opt/hail-on-AWS-spot-instances
 
