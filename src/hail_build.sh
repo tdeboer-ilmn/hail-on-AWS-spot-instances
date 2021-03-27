@@ -128,5 +128,7 @@ if [ "$IS_MASTER" = true ]; then
         fi
     fi
     
-    sudo stop hadoop-yarn-resourcemanager; sleep 1; sudo start hadoop-yarn-resourcemanager
+    sudo systemctl stop hadoop-yarn-resourcemanager;
+    sleep 1;
+    sudo systemctl start hadoop-yarn-resourcemanager
 fi
