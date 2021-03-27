@@ -127,4 +127,6 @@ if [ "$IS_MASTER" = true ]; then
             cp $PWD/build/libs/hail-all-spark.jar $HOME
         fi
     fi
+    
+    sudo stop hadoop-yarn-resourcemanager; sleep 1; sudo start hadoop-yarn-resourcemanager
 fi

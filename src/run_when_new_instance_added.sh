@@ -17,11 +17,11 @@ else
      echo "Updating cluster"
      # scp -o "StrictHostKeyChecking no" -i ~/.ssh/id_rsa/${KEY} ~/.ssh/id_rsa/${KEY} ${WORKERIP}:/home/hadoop/.ssh/id_rsa
      scp -o "StrictHostKeyChecking no" -i ~/.ssh/id_rsa/${KEY} ~/.ssh/authorized_keys ${WORKERIP}:/home/hadoop/.ssh/authorized_keys
-     # Install Python 3 - Bootstrap takes care of Python 3 install
-     # scp /opt/hail-on-AWS-spot-instances/src/install_python36.sh hadoop@${WORKERIP}:/tmp/install_python36.sh
-     # ssh hadoop@${WORKERIP} "sudo ls -al /tmp/install_python36.sh"
-     # ssh hadoop@${WORKERIP} "sudo /tmp/install_python36.sh &" 
-     # ssh hadoop@${WORKERIP} "python3 --version"
+     # Install Python 3 - 
+     scp /opt/hail-on-AWS-spot-instances/src/install_python.sh hadoop@${WORKERIP}:/tmp/install_python.sh
+     ssh hadoop@${WORKERIP} "sudo ls -al /tmp/install_python.sh"
+     ssh hadoop@${WORKERIP} "sudo /tmp/install_python.sh &" 
+     ssh hadoop@${WORKERIP} "python3 --version"
      # Distribute Hail files
      scp -i $HOME/.ssh/id_rsa/${KEY} $HOME/hail-* $WORKERIP:/home/hadoop/
      sudo grep -i privateip /mnt/var/lib/info/*.txt | sort -u | cut -d "\"" -f 2 > /tmp/t1.txt

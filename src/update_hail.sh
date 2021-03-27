@@ -42,8 +42,6 @@ while [ "$1" != "" ]; do
 done
 
 echo "Running Hail installation with option: $HASH"
-sudo rm -r hail
-sudo rm /etc/alternatives/jre/include/include
 # Build Hail
 ./hail_build.sh -v $HASH
 
