@@ -8,13 +8,14 @@ config:
   MASTER_INSTANCE_TYPE: "m4.large"
   WORKER_INSTANCE_TYPE: "r4.4xlarge"
   WORKER_COUNT: "1" # Number of worker nodes
-  WORKER_BID_PRICE: "0.50" # Required for spot instances
+  WORKER_BID_PRICE: "0.90" # Required for spot instances
   MASTER_HD_SIZE: "250" # Size in GB - For large data sets, more HD space may be required
   WORKER_HD_SIZE: "500" # Size in GB - For large data sets, more HD space may be required
   SUBNET_ID: "" # This field can be either left blank or for further security you can specify your private subnet ID in the form: subnet-1a2b3c4d
-  S3_BUCKET: "s3n://ilmn-hail/" # Specify your S3 bucket for EMR log storage and boostrapping file
+  S3_BUCKET: "s3://ilmn-hail/" # Specify your S3 bucket for EMR log storage and bootstrapping file
+  BOOTSTRAP_S3_URI: "s3://ilmn-hail/bootstrap_hail/bootstrap.sh"
   KEY_NAME: "hail-ES-GRE" # Input your key name ONLY! DO NOT include the .pem extension
   PATH_TO_KEY: "/data/" # Full path to the FOLDER where the .pem file resides
   WORKER_SECURITY_GROUP: "sg-0df1e5704ca2a8196" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
   MASTER_SECURITY_GROUP: "sg-0bab1202c0aa453b3" # If empty creates a new group by default. You can also add a specific SG. See the SG link in the FAQs section
-  HAIL_VERSION: "current" # Specify a git hash version (the first 7-12 characters will suffice) to install a specific commit/version. When left empty or "current" will install the latest version of Hail available in the repo
+

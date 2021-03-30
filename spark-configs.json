@@ -1,0 +1,22 @@
+[
+    {
+        "Classification": "spark-defaults",
+        "Properties": {
+            "spark.jars": "/usr/local/lib/python3.7/site-packages/hail/backend/hail-all-spark.jar",
+            "spark.kryo.registrator": "is.hail.kryo.HailKryoRegistrator",
+            "spark.serializer" : "org.apache.spark.serializer.KryoSerializer"
+        }
+    },
+    {
+        "Classification":"spark",
+        "Properties":{
+            "maximizeResourceAllocation":"true"
+        }
+    },
+    {
+        "Classification":"yarn-site",
+        "Properties":{
+            "yarn.nodemanager.vmem-check-enabled":"false"
+        }
+    }
+]
